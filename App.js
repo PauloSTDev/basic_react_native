@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, Image, Button, StyleSheet, SafeAreaView} from 'react-native';
+import { View, Text, Image, Button, StyleSheet, SafeAreaView, TextInput, Alert} from 'react-native';
 
 let picture = require('./assets/logo.png');
 let url = 'https://reactnative.dev/img/tiny_logo.png';
 
 class App extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
+            input: '',
+            userName: 'Please enter your name',
+            isDisabled: false,
             imageUrl: url,
-            title: 'React Native Logo from URL'
+            title: 'React Native Logo from URL',
         };
         this.changeLogo = this.changeLogo.bind(this);
+        this.onChangeText = this.onChangeText.bind(this);
+        this.onClick = this.onClick.bind(this);
+
     }
 
     changeLogo(title, image) {
@@ -20,7 +25,30 @@ class App extends Component {
             imageUrl: image,
             title: title
         });
-    }  
+    }
+
+    onChangeText(text){
+        if (text.length === 0) {
+            this.setState({userName: 'Please enter your name', input: ''});
+            return;
+        } else {
+            this.setState({input: text});
+        }
+    }
+
+    onClick() {
+        if (this.state.input.length === 0) {
+            alert('Digite seu nome!');
+            return;
+        }
+        else {
+            this.setState({
+                userName: 'Hello '+ this.state.input + '!',
+                input: '',
+                isDisabled: true,
+            });
+        }
+    }
                 
     render() {
         return (
@@ -30,8 +58,27 @@ class App extends Component {
                         <Text style={styles.title}>Basic of React Native</Text>
                     </SafeAreaView>
                 </View>
-                <View style={{flex: 3, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.imageContainer}>
                     <Logo title={this.state.title} image={this.state.imageUrl}/>
+                </View>
+                <Text style={{textAlign: 'center', fontSize: 20, margin: 10}}>
+                    {this.state.userName}
+                </Text>
+                <View>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter your name"
+                    underlineColorAndroid={'transparent'}
+                    onChangeText={(texto) => this.onChangeText(texto)}
+                    value={this.state.input}
+                />
+                <Button
+                    title='Concluir'
+                    onPress={() => this.onClick()}
+                    color={'black'}
+                    disabled={this.state.isDisabled}
+                />
+                    
                 </View>
                 <SafeAreaView style={styles.row}>
                     <View style={styles.buttonContainer}>
@@ -86,12 +133,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         
     },
+    imageContainer: {
+        flex: 3,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     buttonContainer: {
         backgroundColor: '#b3cce6',
         borderRadius: 10,
         marginHorizontal: 10,
         marginVertical: 20,
         padding: 15,
+    },
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 10,
+        padding: 10,
+        borderRadius: 5,
     },
     row: {
         flexDirection: 'row',
