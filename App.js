@@ -15,9 +15,9 @@ class App extends Component {
         this.changeLogo = this.changeLogo.bind(this);
     }
 
-    changeLogo(title) {
+    changeLogo(title, image) {
         this.setState({
-            imageUrl: picture,
+            imageUrl: image,
             title: title
         });
     }  
@@ -25,13 +25,27 @@ class App extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={{ fontSize: 40, margin: 50}}>Basic of React Native</Text>
-                <Logo title={this.state.title} image={this.state.imageUrl}/>
-                <SafeAreaView style={styles.buttonContainer}>
-                    <Button
-                        title='Change Image' onPress={() => this.changeLogo('React Native Logo from asset')}
-                        color={'black'}
-                    />
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <SafeAreaView>
+                        <Text style={styles.title}>Basic of React Native</Text>
+                    </SafeAreaView>
+                </View>
+                <View style={{flex: 3, justifyContent: 'center', alignItems: 'center'}}>
+                    <Logo title={this.state.title} image={this.state.imageUrl}/>
+                </View>
+                <SafeAreaView style={styles.row}>
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            title='Change to URL' onPress={() => this.changeLogo('React Native Logo from URL', url)}
+                            color={'black'}
+                        />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button
+                            title='Change to Asset' onPress={() => this.changeLogo('React Native Logo from asset', picture)}
+                            color={'black'}
+                        />
+                    </View>
                 </SafeAreaView>
             </View>
         )
@@ -54,9 +68,13 @@ class Logo extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 100,
         backgroundColor: '#e1e2e3',
-        
+        flex: 1,
+    },
+    title: {
+        margin: 20,
+        fontSize: 25,
+        textAlign: 'center',
     },
     logo: {
         width: 100,
@@ -66,15 +84,18 @@ const styles = StyleSheet.create({
     LogoTitle: {
         fontSize: 20,
         textAlign: 'center',
-        margin: 50,
+        
     },
     buttonContainer: {
-        alignItems: 'center',
         backgroundColor: '#b3cce6',
         borderRadius: 10,
         marginHorizontal: 10,
         marginVertical: 20,
         padding: 15,
     },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    }
 });
 export default App;
