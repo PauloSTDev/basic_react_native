@@ -61,25 +61,13 @@ class App extends Component {
                 <View style={styles.imageContainer}>
                     <Logo title={this.state.title} image={this.state.imageUrl}/>
                 </View>
-                <Text style={{textAlign: 'center', fontSize: 20, margin: 10}}>
-                    {this.state.userName}
-                </Text>
-                <View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your name"
-                    underlineColorAndroid={'transparent'}
-                    onChangeText={(texto) => this.onChangeText(texto)}
-                    value={this.state.input}
+                <Input
+                    userName={this.state.userName}
+                    input={this.state.input}
+                    isDisabled={this.state.isDisabled}
+                    onChangeText={this.onChangeText}
+                    onPress={this.onClick}
                 />
-                <Button
-                    title='Concluir'
-                    onPress={() => this.onClick()}
-                    color={'black'}
-                    disabled={this.state.isDisabled}
-                />
-                    
-                </View>
                 <SafeAreaView style={styles.row}>
                     <View style={styles.buttonContainer}>
                         <Button
@@ -94,6 +82,31 @@ class App extends Component {
                         />
                     </View>
                 </SafeAreaView>
+            </View>
+        )
+    }
+}
+
+class Input extends Component {
+    render() {
+        return (
+            <View>
+                <Text style={{textAlign: 'center', fontSize: 20, margin: 10}}>
+                    {this.props.userName}
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter your name"
+                    underlineColorAndroid={'transparent'}
+                    onChangeText={(texto) => this.props.onChangeText(texto)}
+                    value={this.props.input}
+                />
+                <Button
+                    title='Concluir'
+                    onPress={() => this.props.onPress()}
+                    color={'black'}
+                    disabled={this.props.isDisabled}
+                />
             </View>
         )
     }
@@ -158,4 +171,5 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     }
 });
+
 export default App;
