@@ -38,7 +38,7 @@ class App extends Component {
 
     onClick() {
         if (this.state.input.length === 0) {
-            alert('Digite seu nome!');
+            Alert.alert('Digite seu nome!');
             return;
         }
         else {
